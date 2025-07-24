@@ -1,42 +1,147 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Layout responsive adjustments */
+@media (max-width: 768px) {
+  .ant-layout-header {
+    padding: 0 16px !important;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .ant-layout-content {
+    padding: 16px !important;
+  }
+  
+  .ant-card {
+    margin-bottom: 16px;
+  }
+  
+  .ant-row {
+    margin-left: -8px !important;
+    margin-right: -8px !important;
+  }
+  
+  .ant-col {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* Custom styles for better mobile experience */
+@media (max-width: 576px) {
+  .ant-typography h1 {
+    font-size: 24px !important;
+  }
+  
+  .ant-typography h2 {
+    font-size: 20px !important;
+  }
+  
+  .ant-card-body {
+    padding: 16px !important;
+  }
+  
+  .ant-statistic-title {
+    font-size: 12px !important;
+  }
+  
+  .ant-statistic-content {
+    font-size: 18px !important;
   }
 }
 
-.card {
-  padding: 2em;
+/* Desktop menu visibility */
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none !important;
+  }
+  
+  .mobile-menu-button {
+    display: block !important;
+  }
+  
+  .desktop-sidebar {
+    display: none !important;
+  }
+  
+  .mobile-sidebar {
+    display: block !important;
+  }
 }
 
-.read-the-docs {
-  color: #888;
+@media (min-width: 769px) {
+  .desktop-menu {
+    display: block !important;
+  }
+  
+  .mobile-menu-button {
+    display: none !important;
+  }
+  
+  .desktop-sidebar {
+    display: block !important;
+  }
+  
+  .mobile-sidebar {
+    display: none !important;
+  }
+}
+
+/* Sidebar hover effects */
+.sidebar-item:hover {
+  background-color: #f0f8ff !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  border-radius: 4px;
+}
+
+/* Custom animations */
+.ant-card {
+  transition: all 0.3s ease;
+}
+
+.ant-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure proper scrolling on mobile */
+@media (max-width: 768px) {
+  .ant-layout {
+    overflow-x: hidden;
+  }
+  
+  .ant-layout-content {
+    overflow-x: hidden;
+  }
+}
+
+/* Progress bar custom styles */
+.ant-progress-line {
+  margin-top: 8px;
+}
+
+/* Button responsive adjustments */
+@media (max-width: 576px) {
+  .ant-btn {
+    font-size: 14px;
+    height: 36px;
+    padding: 4px 12px;
+  }
+  
+  .ant-btn-lg {
+    font-size: 16px;
+    height: 40px;
+    padding: 6px 16px;
+  }
 }
