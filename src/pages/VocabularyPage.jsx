@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
-import { Button, Select, Input, Typography } from 'antd';
-import { 
-  SoundOutlined, 
-  HeartOutlined, 
-  BookOutlined,
-  SearchOutlined,
-  FilterOutlined
-} from '@ant-design/icons';
+import { Button, Typography } from 'antd';
+import { SoundOutlined, HeartOutlined, BookOutlined } from '@ant-design/icons';
 import styles from './VocabularyPage.module.css';
+import GridList from '../components/ui/GridList';
 
 const { Title, Paragraph } = Typography;
-const { Option } = Select;
 
 const VocabularyPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedLevel, setSelectedLevel] = useState('all');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [filterValues, setFilterValues] = useState({
+    level: 'all',
+    category: 'all',
+  });
 
   // Mock vocabulary data
   const vocabularies = [
@@ -88,12 +84,35 @@ const VocabularyPage = () => {
     reviewing: vocabularies.filter(v => !v.learned).length,
   };
 
+  const filters = [
+    {
+      label: 'Cấp độ',
+      value: 'level',
+      options: [
+        { value: 'all', label: 'Tất cả cấp độ' },
+        { value: 'beginner', label: 'Cơ bản' },
+        { value: 'intermediate', label: 'Trung cấp' },
+        { value: 'advanced', label: 'Nâng cao' },
+      ],
+    },
+    {
+      label: 'Chủ đề',
+      value: 'category',
+      options: [
+        { value: 'all', label: 'Tất cả chủ đề' },
+        { value: 'general', label: 'Tổng quát' },
+        { value: 'education', label: 'Giáo dục' },
+        { value: 'emotion', label: 'Cảm xúc' },
+        { value: 'adjective', label: 'Tính từ' },
+      ],
+    },
+  ];
+
   const filteredVocabularies = vocabularies.filter(vocab => {
     const matchesSearch = vocab.word.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         vocab.meaning.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesLevel = selectedLevel === 'all' || vocab.level === selectedLevel;
-    const matchesCategory = selectedCategory === 'all' || vocab.category === selectedCategory;
-    
+      vocab.meaning.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesLevel = filterValues.level === 'all' || vocab.level === filterValues.level;
+    const matchesCategory = filterValues.category === 'all' || vocab.category === filterValues.category;
     return matchesSearch && matchesLevel && matchesCategory;
   });
 
@@ -101,6 +120,56 @@ const VocabularyPage = () => {
     // Simulate audio playback
     console.log('Playing audio for:', pronunciation);
   };
+
+  const handleFilterChange = (filterKey, value) => {
+    setFilterValues(prev => ({ ...prev, [filterKey]: value }));
+  };
+
+  const handleClearFilters = () => {
+    setSearchTerm('');
+    setFilterValues({ level: 'all', category: 'all' });
+  };
+
+  // Component tách riêng cho renderItem
+  const VocabularyCard = ({ vocab }) => (
+    <div className={styles.vocabularyCard}>
+      <div className={styles.wordHeader}>
+        <div>
+          <div className={styles.word}>{vocab.word}</div>
+          <div className={styles.pronunciation}>{vocab.pronunciation}</div>
+        </div>
+        <Button
+          className={styles.playButton}
+          icon={<SoundOutlined />}
+          onClick={() => handlePlayAudio(vocab.pronunciation)}
+        />
+      </div>
+      <div className={styles.meaning}>{vocab.meaning}</div>
+      <div className={styles.example}>
+        <strong>Ví dụ:</strong> {vocab.example}
+      </div>
+      <div className={styles.cardActions}>
+        <Button
+          className={`${styles.actionButton} ${styles.learnButton}`}
+          icon={<BookOutlined />}
+        >
+          {vocab.learned ? 'Ôn tập' : 'Học'}
+        </Button>
+        <Button
+          className={`${styles.actionButton} ${styles.reviewButton}`}
+          icon={<BookOutlined />}
+        >
+          Luyện tập
+        </Button>
+        <Button
+          className={`${styles.actionButton} ${styles.favoriteButton}`}
+          icon={<HeartOutlined />}
+        >
+          Yêu thích
+        </Button>
+      </div>
+    </div>
+  );
 
   return (
     <div className={styles.vocabularyContainer}>
@@ -114,131 +183,25 @@ const VocabularyPage = () => {
         </Paragraph>
       </div>
 
-      {/* Filter Section */}
-      <div className={styles.filterSection}>
-        <div className={styles.filterGrid}>
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
-              Tìm kiếm
-            </label>
-            <Input
-              placeholder="Tìm từ vựng..."
-              prefix={<SearchOutlined />}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              size="large"
-            />
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
-              Cấp độ
-            </label>
-            <Select
-              value={selectedLevel}
-              onChange={setSelectedLevel}
-              style={{ width: '100%' }}
-              size="large"
-            >
-              <Option value="all">Tất cả cấp độ</Option>
-              <Option value="beginner">Cơ bản</Option>
-              <Option value="intermediate">Trung cấp</Option>
-              <Option value="advanced">Nâng cao</Option>
-            </Select>
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
-              Chủ đề
-            </label>
-            <Select
-              value={selectedCategory}
-              onChange={setSelectedCategory}
-              style={{ width: '100%' }}
-              size="large"
-            >
-              <Option value="all">Tất cả chủ đề</Option>
-              <Option value="general">Tổng quát</Option>
-              <Option value="education">Giáo dục</Option>
-              <Option value="emotion">Cảm xúc</Option>
-              <Option value="adjective">Tính từ</Option>
-            </Select>
-          </div>
-          <div>
-            <Button
-              type="primary"
-              size="large"
-              icon={<FilterOutlined />}
-              style={{ width: '100%' }}
-            >
-              Lọc
+      {/* Vocabulary GridList */}
+      <GridList
+        items={filteredVocabularies}
+        renderItem={<VocabularyCard />}
+        searchTerm={searchTerm}
+        onSearch={setSearchTerm}
+        filters={filters}
+        filterValues={filterValues}
+        onFilterChange={handleFilterChange}
+        onFilter={null}
+        emptyText={
+          <>
+            Không tìm thấy từ vựng nào phù hợp với bộ lọc của bạn<br />
+            <Button type="primary" onClick={handleClearFilters} style={{ marginTop: 12 }}>
+              Xóa bộ lọc
             </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Vocabulary Grid */}
-      {filteredVocabularies.length > 0 ? (
-        <div className={styles.vocabularyGrid}>
-          {filteredVocabularies.map((vocab) => (
-            <div key={vocab.id} className={styles.vocabularyCard}>
-              <div className={styles.wordHeader}>
-                <div>
-                  <div className={styles.word}>{vocab.word}</div>
-                  <div className={styles.pronunciation}>{vocab.pronunciation}</div>
-                </div>
-                <Button
-                  className={styles.playButton}
-                  icon={<SoundOutlined />}
-                  onClick={() => handlePlayAudio(vocab.pronunciation)}
-                />
-              </div>
-              
-              <div className={styles.meaning}>{vocab.meaning}</div>
-              
-              <div className={styles.example}>
-                <strong>Ví dụ:</strong> {vocab.example}
-              </div>
-              
-              <div className={styles.cardActions}>
-                <Button
-                  className={`${styles.actionButton} ${styles.learnButton}`}
-                  icon={<BookOutlined />}
-                >
-                  {vocab.learned ? 'Ôn tập' : 'Học'}
-                </Button>
-                <Button
-                  className={`${styles.actionButton} ${styles.reviewButton}`}
-                  icon={<BookOutlined />}
-                >
-                  Luyện tập
-                </Button>
-                <Button
-                  className={`${styles.actionButton} ${styles.favoriteButton}`}
-                  icon={<HeartOutlined />}
-                >
-                  Yêu thích
-                </Button>
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className={styles.emptyState}>
-          <SearchOutlined className={styles.emptyIcon} />
-          <div className={styles.emptyText}>
-            Không tìm thấy từ vựng nào phù hợp với bộ lọc của bạn
-          </div>
-          <Button
-            type="primary"
-            onClick={() => {
-              setSearchTerm('');
-              setSelectedLevel('all');
-              setSelectedCategory('all');
-            }}
-          >
-            Xóa bộ lọc
-          </Button>
-        </div>
-      )}
+          </>
+        }
+      />
 
       {/* Statistics Section */}
       <div className={styles.statsSection}>

@@ -8,6 +8,7 @@ import {
   ClockCircleOutlined
 } from '@ant-design/icons';
 import { ROUTES } from '../constants/routes';
+import GridList from '../components/ui/GridList';
 
 const { Title, Paragraph } = Typography;
 
@@ -47,6 +48,85 @@ const ListeningPage = () => {
     },
   ];
 
+  // State cho search/filter
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const [filterValues, setFilterValues] = React.useState({ level: '', completed: '' });
+
+  // Filter options
+  const filters = [
+    {
+      label: 'Trình độ',
+      value: 'level',
+      options: [
+        { value: '', label: 'Tất cả' },
+        { value: 'Cơ bản', label: 'Cơ bản' },
+        { value: 'Trung cấp', label: 'Trung cấp' },
+        { value: 'Nâng cao', label: 'Nâng cao' },
+      ],
+    },
+    {
+      label: 'Trạng thái',
+      value: 'completed',
+      options: [
+        { value: '', label: 'Tất cả' },
+        { value: 'true', label: 'Đã hoàn thành' },
+        { value: 'false', label: 'Chưa hoàn thành' },
+      ],
+    },
+  ];
+
+  // Xử lý search/filter
+  const filteredExercises = listeningExercises.filter(ex => {
+    const matchSearch = ex.title.toLowerCase().includes(searchTerm.toLowerCase()) || ex.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchLevel = !filterValues.level || ex.level === filterValues.level;
+    const matchCompleted = !filterValues.completed || String(ex.completed) === filterValues.completed;
+    return matchSearch && matchLevel && matchCompleted;
+  });
+
+  const handleSearch = value => setSearchTerm(value);
+  const handleFilterChange = (key, value) => setFilterValues(prev => ({ ...prev, [key]: value }));
+  const handleFilter = () => {};
+
+  // Render từng item
+  const renderItem = (exercise) => (
+    <Card
+      hoverable
+      style={{ height: '100%', borderRadius: '12px', border: '1px solid rgba(114, 46, 209, 0.1)' }}
+      cover={
+        <div style={{ padding: '30px', textAlign: 'center', background: 'linear-gradient(135deg, rgba(114, 46, 209, 0.1), rgba(24, 144, 255, 0.1))' }}>
+          <AudioOutlined style={{ fontSize: '48px', color: '#722ed1' }} />
+        </div>
+      }
+      actions={[
+        <Button 
+          type="primary" 
+          icon={<PlayCircleOutlined />}
+          style={{ width: '90%', background: 'linear-gradient(135deg, #722ed1, #9254de)', borderColor: 'transparent' }}
+        >
+          {exercise.completed ? 'Luyện lại' : 'Bắt đầu'}
+        </Button>
+      ]}
+      key={exercise.id}
+    >
+      <Card.Meta
+        title={
+          <div>
+            <div style={{ color: '#722ed1', marginBottom: '4px' }}>{exercise.title}</div>
+            <div style={{ fontSize: '12px', color: '#666', fontWeight: 'normal' }}>{exercise.level} • {exercise.duration}</div>
+          </div>
+        }
+        description={
+          <div>
+            <Paragraph style={{ color: '#666', fontSize: '14px', marginBottom: '16px', lineHeight: '1.5' }}>{exercise.description}</Paragraph>
+            {exercise.completed && (
+              <div style={{ color: '#52c41a', fontSize: '12px' }}><TrophyOutlined /> Đã hoàn thành</div>
+            )}
+          </div>
+        }
+      />
+    </Card>
+  );
+
   return (
     <div style={{ padding: '20px 0' }}>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
@@ -58,79 +138,23 @@ const ListeningPage = () => {
         </Paragraph>
       </div>
 
-      <Row gutter={[24, 24]}>
-        {listeningExercises.map((exercise) => (
-          <Col xs={24} sm={12} lg={8} key={exercise.id}>
-            <Card
-              hoverable
-              style={{ 
-                height: '100%',
-                borderRadius: '12px',
-                border: '1px solid rgba(114, 46, 209, 0.1)',
-              }}
-              cover={
-                <div style={{ 
-                  padding: '30px', 
-                  textAlign: 'center',
-                  background: 'linear-gradient(135deg, rgba(114, 46, 209, 0.1), rgba(24, 144, 255, 0.1))',
-                }}>
-                  <AudioOutlined style={{ fontSize: '48px', color: '#722ed1' }} />
-                </div>
-              }
-              actions={[
-                <Button 
-                  type="primary" 
-                  icon={<PlayCircleOutlined />}
-                  style={{ 
-                    width: '90%',
-                    background: 'linear-gradient(135deg, #722ed1, #9254de)',
-                    borderColor: 'transparent',
-                  }}
-                >
-                  {exercise.completed ? 'Luyện lại' : 'Bắt đầu'}
-                </Button>
-              ]}
-            >
-              <Card.Meta
-                title={
-                  <div>
-                    <div style={{ color: '#722ed1', marginBottom: '4px' }}>
-                      {exercise.title}
-                    </div>
-                    <div style={{ 
-                      fontSize: '12px', 
-                      color: '#666',
-                      fontWeight: 'normal',
-                    }}>
-                      {exercise.level} • {exercise.duration}
-                    </div>
-                  </div>
-                }
-                description={
-                  <div>
-                    <Paragraph 
-                      style={{ 
-                        color: '#666', 
-                        fontSize: '14px',
-                        marginBottom: '16px',
-                        lineHeight: '1.5',
-                      }}
-                    >
-                      {exercise.description}
-                    </Paragraph>
-                    {exercise.completed && (
-                      <div style={{ color: '#52c41a', fontSize: '12px' }}>
-                        <TrophyOutlined /> Đã hoàn thành
-                      </div>
-                    )}
-                  </div>
-                }
-              />
-            </Card>
-          </Col>
-        ))}
-      </Row>
+      {/* GridList với search/filter */}
+      <div style={{ marginBottom: 40 }}>
+        <GridList
+          items={filteredExercises}
+          renderItem={renderItem}
+          searchTerm={searchTerm}
+          onSearch={handleSearch}
+          filters={filters}
+          filterValues={filterValues}
+          onFilterChange={handleFilterChange}
+          onFilter={handleFilter}
+          columns={3}
+          emptyText="Không có bài luyện nghe phù hợp"
+        />
+      </div>
 
+      {/* Tips luyện nghe hiệu quả */}
       <div style={{ 
         textAlign: 'center', 
         marginTop: '60px',

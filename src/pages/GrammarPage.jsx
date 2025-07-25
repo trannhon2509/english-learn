@@ -1,17 +1,21 @@
-import React from 'react';
-import { Typography, Card, Row, Col, Button } from 'antd';
+import React, { useState } from 'react';
+import { Typography, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { 
   BookOutlined, 
   SoundOutlined,
   TrophyOutlined,
-  ClockCircleOutlined
+  ClockCircleOutlined,
+  FilterOutlined
 } from '@ant-design/icons';
 import { ROUTES } from '../constants/routes';
+import GridList from '../components/ui/GridList';
 
 const { Title, Paragraph } = Typography;
 
 const GrammarPage = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterValues, setFilterValues] = useState({ level: '', completed: '' });
   const grammarTopics = [
     {
       id: 1,
@@ -47,6 +51,70 @@ const GrammarPage = () => {
     },
   ];
 
+  // Các bộ lọc
+  const filters = [
+    {
+      label: 'Trình độ',
+      value: 'level',
+      options: [
+        { value: '', label: 'Tất cả' },
+        { value: 'Cơ bản', label: 'Cơ bản' },
+        { value: 'Trung cấp', label: 'Trung cấp' },
+        { value: 'Nâng cao', label: 'Nâng cao' },
+      ],
+    },
+    {
+      label: 'Trạng thái',
+      value: 'completed',
+      options: [
+        { value: '', label: 'Tất cả' },
+        { value: 'true', label: 'Đã hoàn thành' },
+        { value: 'false', label: 'Chưa hoàn thành' },
+      ],
+    },
+  ];
+
+  // Lọc dữ liệu
+  const filteredTopics = grammarTopics.filter(topic => {
+    const matchSearch = topic.title.toLowerCase().includes(searchTerm.toLowerCase()) || topic.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchLevel = !filterValues.level || topic.level === filterValues.level;
+    const matchCompleted = !filterValues.completed || String(topic.completed) === filterValues.completed;
+    return matchSearch && matchLevel && matchCompleted;
+  });
+
+  // Card component for each topic
+  const TopicCard = ({ topic }) => (
+    <div style={{ padding: 12 }} key={topic.id}>
+      <div style={{ 
+        background: 'linear-gradient(135deg, rgba(24, 144, 255, 0.1), rgba(114, 46, 209, 0.1))',
+        borderRadius: 12,
+        padding: 16,
+        textAlign: 'center',
+        marginBottom: 12,
+      }}>
+        <BookOutlined style={{ fontSize: 36, color: '#1890ff' }} />
+      </div>
+      <div style={{ color: '#1890ff', fontWeight: 500, marginBottom: 4 }}>{topic.title}</div>
+      <div style={{ fontSize: 12, color: '#666', marginBottom: 8 }}>{topic.level} • {topic.lessons} bài học</div>
+      <div style={{ color: '#666', fontSize: 14, marginBottom: 8 }}>{topic.description}</div>
+      {topic.completed && (
+        <div style={{ color: '#52c41a', fontSize: 12, marginBottom: 8 }}>
+          <TrophyOutlined /> Đã hoàn thành
+        </div>
+      )}
+      <Button 
+        type="primary" 
+        icon={<SoundOutlined />} 
+        style={{ width: '100%' }}
+      >
+        {topic.completed ? 'Ôn tập' : 'Bắt đầu học'}
+      </Button>
+    </div>
+  );
+
+  // Hàm render từng item
+  const renderItem = (topic) => <TopicCard topic={topic} />;
+
   return (
     <div style={{ padding: '20px 0' }}>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
@@ -58,74 +126,16 @@ const GrammarPage = () => {
         </Paragraph>
       </div>
 
-      <Row gutter={[24, 24]}>
-        {grammarTopics.map((topic) => (
-          <Col xs={24} sm={12} lg={8} key={topic.id}>
-            <Card
-              hoverable
-              style={{ 
-                height: '100%',
-                borderRadius: '12px',
-                border: '1px solid rgba(24, 144, 255, 0.1)',
-              }}
-              cover={
-                <div style={{ 
-                  padding: '30px', 
-                  textAlign: 'center',
-                  background: 'linear-gradient(135deg, rgba(24, 144, 255, 0.1), rgba(114, 46, 209, 0.1))',
-                }}>
-                  <BookOutlined style={{ fontSize: '48px', color: '#1890ff' }} />
-                </div>
-              }
-              actions={[
-                <Button 
-                  type="primary" 
-                  icon={<SoundOutlined />}
-                  style={{ width: '90%' }}
-                >
-                  {topic.completed ? 'Ôn tập' : 'Bắt đầu học'}
-                </Button>
-              ]}
-            >
-              <Card.Meta
-                title={
-                  <div>
-                    <div style={{ color: '#1890ff', marginBottom: '4px' }}>
-                      {topic.title}
-                    </div>
-                    <div style={{ 
-                      fontSize: '12px', 
-                      color: '#666',
-                      fontWeight: 'normal',
-                    }}>
-                      {topic.level} • {topic.lessons} bài học
-                    </div>
-                  </div>
-                }
-                description={
-                  <div>
-                    <Paragraph 
-                      style={{ 
-                        color: '#666', 
-                        fontSize: '14px',
-                        marginBottom: '16px',
-                        lineHeight: '1.5',
-                      }}
-                    >
-                      {topic.description}
-                    </Paragraph>
-                    {topic.completed && (
-                      <div style={{ color: '#52c41a', fontSize: '12px' }}>
-                        <TrophyOutlined /> Đã hoàn thành
-                      </div>
-                    )}
-                  </div>
-                }
-              />
-            </Card>
-          </Col>
-        ))}
-      </Row>
+      <GridList
+        items={filteredTopics}
+        renderItem={renderItem}
+        searchTerm={searchTerm}
+        onSearch={setSearchTerm}
+        filters={filters}
+        filterValues={filterValues}
+        onFilterChange={(key, value) => setFilterValues(fv => ({ ...fv, [key]: value }))}
+        columns={3}
+      />
 
       <div style={{ 
         textAlign: 'center', 
