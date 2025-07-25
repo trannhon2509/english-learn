@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Grid } from 'antd';
 import { Button, Typography } from 'antd';
 import { SoundOutlined, HeartOutlined, BookOutlined } from '@ant-design/icons';
 import styles from './VocabularyPage.module.css';
@@ -7,6 +8,15 @@ import GridList from '../components/ui/GridList';
 const { Title, Paragraph } = Typography;
 
 const VocabularyPage = () => {
+  const screens = Grid.useBreakpoint();
+  let columns = 1;
+  if (screens.lg) {
+    columns = 3;
+  } else if (screens.md) {
+    columns = 2;
+  } else if (screens.sm) {
+    columns = 1;
+  }
   const [searchTerm, setSearchTerm] = useState('');
   const [filterValues, setFilterValues] = useState({
     level: 'all',
@@ -193,6 +203,7 @@ const VocabularyPage = () => {
         filterValues={filterValues}
         onFilterChange={handleFilterChange}
         onFilter={null}
+        columns={columns}
         emptyText={
           <>
             Không tìm thấy từ vựng nào phù hợp với bộ lọc của bạn<br />

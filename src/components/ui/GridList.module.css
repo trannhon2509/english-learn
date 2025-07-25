@@ -1,8 +1,6 @@
 .gridListContainer {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  padding: 24px;
   margin-bottom: 32px;
 }
 
@@ -40,4 +38,14 @@
 .emptyText {
   font-size: 18px;
   font-weight: 500;
+}
+
+.searchInput {
+  width: 280px;
+}
+
+@media (max-width: 600px) {
+  .searchInput {
+    width: 100% !important;
+  }
 }

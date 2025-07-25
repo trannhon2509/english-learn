@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Grid } from 'antd';
 import { Typography, Card, Row, Col, Button, Avatar } from 'antd';
 import { Link } from 'react-router-dom';
 import { 
@@ -16,6 +17,15 @@ const { Title, Paragraph } = Typography;
 import GridList from '../components/ui/GridList';
 
 const PronunciationPage = () => {
+  const screens = Grid.useBreakpoint();
+  let columns = 1;
+  if (screens.lg) {
+    columns = 3;
+  } else if (screens.md) {
+    columns = 2;
+  } else if (screens.sm) {
+    columns = 1;
+  }
   const [searchTerm, setSearchTerm] = useState('');
   const [filterValues, setFilterValues] = useState({ difficulty: '', completed: '' });
 
@@ -144,7 +154,7 @@ const PronunciationPage = () => {
           filters={filters}
           filterValues={filterValues}
           onFilterChange={(key, value) => setFilterValues(prev => ({ ...prev, [key]: value }))}
-          columns={4}
+          columns={columns}
         />
       </div>
 

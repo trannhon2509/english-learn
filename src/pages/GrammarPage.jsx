@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Typography, Button } from 'antd';
+import { Typography, Button, Grid, Card } from 'antd';
+const { useBreakpoint } = Grid;
 import { Link } from 'react-router-dom';
 import { 
   BookOutlined, 
@@ -16,6 +17,7 @@ const { Title, Paragraph } = Typography;
 const GrammarPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterValues, setFilterValues] = useState({ level: '', completed: '' });
+  const screens = useBreakpoint();
   const grammarTopics = [
     {
       id: 1,
@@ -83,37 +85,63 @@ const GrammarPage = () => {
   });
 
   // Card component for each topic
-  const TopicCard = ({ topic }) => (
-    <div style={{ padding: 12 }} key={topic.id}>
-      <div style={{ 
-        background: 'linear-gradient(135deg, rgba(24, 144, 255, 0.1), rgba(114, 46, 209, 0.1))',
-        borderRadius: 12,
-        padding: 16,
-        textAlign: 'center',
-        marginBottom: 12,
-      }}>
-        <BookOutlined style={{ fontSize: 36, color: '#1890ff' }} />
+  const TopicCard = ({ topic }) => {
+    // Chiều cao cố định cho card và cover
+    const CARD_HEIGHT = 320;
+    const COVER_HEIGHT = 80;
+    return (
+      <div key={topic.id} style={{ padding: 12, height: CARD_HEIGHT }}>
+        <Card
+          hoverable
+          style={{ borderRadius: 16, boxShadow: '0 2px 8px rgba(24,144,255,0.08)', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+          cover={
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              background: 'linear-gradient(135deg, rgba(24, 144, 255, 0.1), rgba(114, 46, 209, 0.1))',
+              borderRadius: '16px 16px 0 0',
+              height: COVER_HEIGHT
+            }}>
+              <BookOutlined style={{ fontSize: 40, color: '#1890ff' }} />
+            </div>
+          }
+          bodyStyle={{ padding: 16, height: CARD_HEIGHT - COVER_HEIGHT - 24, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+        >
+          <div>
+            <div style={{ color: '#1890ff', fontWeight: 600, fontSize: 18, marginBottom: 4 }}>{topic.title}</div>
+            <div style={{ fontSize: 13, color: '#666', marginBottom: 8 }}>{topic.level} • {topic.lessons} bài học</div>
+            <div style={{ color: '#666', fontSize: 14, marginBottom: 8 }}>{topic.description}</div>
+            {topic.completed && (
+              <div style={{ color: '#52c41a', fontSize: 13, marginBottom: 8 }}>
+                <TrophyOutlined /> Đã hoàn thành
+              </div>
+            )}
+          </div>
+          <Button
+            type={topic.completed ? 'default' : 'primary'}
+            icon={<SoundOutlined />}
+            style={{ width: '100%', marginTop: 8 }}
+          >
+            {topic.completed ? 'Ôn tập' : 'Bắt đầu học'}
+          </Button>
+        </Card>
       </div>
-      <div style={{ color: '#1890ff', fontWeight: 500, marginBottom: 4 }}>{topic.title}</div>
-      <div style={{ fontSize: 12, color: '#666', marginBottom: 8 }}>{topic.level} • {topic.lessons} bài học</div>
-      <div style={{ color: '#666', fontSize: 14, marginBottom: 8 }}>{topic.description}</div>
-      {topic.completed && (
-        <div style={{ color: '#52c41a', fontSize: 12, marginBottom: 8 }}>
-          <TrophyOutlined /> Đã hoàn thành
-        </div>
-      )}
-      <Button 
-        type="primary" 
-        icon={<SoundOutlined />} 
-        style={{ width: '100%' }}
-      >
-        {topic.completed ? 'Ôn tập' : 'Bắt đầu học'}
-      </Button>
-    </div>
-  );
+    );
+  };
 
   // Hàm render từng item
   const renderItem = (topic) => <TopicCard topic={topic} />;
+
+  // Xác định số cột dựa trên breakpoint
+  let columns = 1;
+  if (screens.lg) {
+    columns = 3;
+  } else if (screens.md) {
+    columns = 2;
+  } else if (screens.sm) {
+    columns = 1;
+  }
 
   return (
     <div style={{ padding: '20px 0' }}>
@@ -134,7 +162,7 @@ const GrammarPage = () => {
         filters={filters}
         filterValues={filterValues}
         onFilterChange={(key, value) => setFilterValues(fv => ({ ...fv, [key]: value }))}
-        columns={3}
+        columns={columns}
       />
 
       <div style={{ 

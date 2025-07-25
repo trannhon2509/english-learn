@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid } from 'antd';
 import { Typography, Card, Row, Col, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { 
@@ -13,6 +14,15 @@ import GridList from '../components/ui/GridList';
 const { Title, Paragraph } = Typography;
 
 const ListeningPage = () => {
+  const screens = Grid.useBreakpoint();
+  let columns = 1;
+  if (screens.lg) {
+    columns = 3;
+  } else if (screens.md) {
+    columns = 2;
+  } else if (screens.sm) {
+    columns = 1;
+  }
   const listeningExercises = [
     {
       id: 1,
@@ -149,7 +159,7 @@ const ListeningPage = () => {
           filterValues={filterValues}
           onFilterChange={handleFilterChange}
           onFilter={handleFilter}
-          columns={3}
+          columns={columns}
           emptyText="Không có bài luyện nghe phù hợp"
         />
       </div>

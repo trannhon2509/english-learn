@@ -45,6 +45,7 @@ const GridList = ({
                             Tìm kiếm
                         </label>
                         <Input
+                            className={styles.searchInput}
                             placeholder="Tìm kiếm..."
                             prefix={<SearchOutlined />}
                             value={searchTerm}
