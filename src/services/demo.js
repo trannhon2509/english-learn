@@ -1,4 +1,4 @@
-import { learningService } from '../services';
+import { learningService } from '@services';
 
 /**
  * Demo các chức năng của hệ thống Model và Manager

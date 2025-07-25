@@ -4,7 +4,7 @@ import { MenuOutlined } from '@ant-design/icons';
 import { Link, useLocation } from 'react-router-dom';
 import { getMenuItems } from '../config/navigation.jsx';
 import { APP_CONFIG } from '../constants';
-import styles from './Header.module.css';
+import styles from '@css/Header.module.css';
 
 const { Header: AntHeader } = Layout;
 

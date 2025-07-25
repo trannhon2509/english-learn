@@ -9,8 +9,8 @@ import {
   RocketOutlined,
   TrophyOutlined
 } from '@ant-design/icons';
-import { ROUTES } from '../constants/routes';
-import styles from './LearnWelcomePage.module.css';
+import { ROUTES } from '@constants/routes';
+import styles from '@css/LearnWelcomePage.module.css';
 
 const { Title, Paragraph } = Typography;
 

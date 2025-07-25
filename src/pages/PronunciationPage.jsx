@@ -9,12 +9,12 @@ import {
   PlayCircleOutlined,
   CheckCircleOutlined
 } from '@ant-design/icons';
-import { ROUTES } from '../constants/routes';
+import { ROUTES } from '@constants/routes';
 
 const { Title, Paragraph } = Typography;
 
 
-import GridList from '../components/ui/GridList';
+import GridList from '@components/ui/GridList';
 
 const PronunciationPage = () => {
   const screens = Grid.useBreakpoint();

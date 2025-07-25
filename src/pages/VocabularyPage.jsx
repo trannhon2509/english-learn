@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Grid } from 'antd';
 import { Button, Typography } from 'antd';
 import { SoundOutlined, HeartOutlined, BookOutlined } from '@ant-design/icons';
-import styles from './VocabularyPage.module.css';
-import GridList from '../components/ui/GridList';
+import styles from '@css/VocabularyPage.module.css';
+import GridList from '@components/ui/GridList';
 
 const { Title, Paragraph } = Typography;
 

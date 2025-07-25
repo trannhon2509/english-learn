@@ -1,14 +1,14 @@
 import { lazy } from 'react';
-import { ROUTES } from '../constants/routes';
+import { ROUTES } from '@constants/routes';
 
 // Lazy load components for better performance
-const HomePage = lazy(() => import('../pages/HomePage'));
-const LearnPage = lazy(() => import('../pages/LearnPage'));
-const VocabularyPage = lazy(() => import('../pages/VocabularyPage'));
-const GrammarPage = lazy(() => import('../pages/GrammarPage'));
-const ListeningPage = lazy(() => import('../pages/ListeningPage'));
-const PronunciationPage = lazy(() => import('../pages/PronunciationPage'));
-const ProfilePage = lazy(() => import('../pages/ProfilePage'));
+const HomePage = lazy(() => import('@pages/HomePage'));
+const LearnPage = lazy(() => import('@pages/LearnPage'));
+const VocabularyPage = lazy(() => import('@pages/VocabularyPage'));
+const GrammarPage = lazy(() => import('@pages/GrammarPage'));
+const ListeningPage = lazy(() => import('@pages/ListeningPage'));
+const PronunciationPage = lazy(() => import('@pages/PronunciationPage'));
+const ProfilePage = lazy(() => import('@pages/ProfilePage'));
 
 export const routeComponents = {
   [ROUTES.HOME]: HomePage,

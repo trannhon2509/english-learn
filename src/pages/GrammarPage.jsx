@@ -9,8 +9,8 @@ import {
   ClockCircleOutlined,
   FilterOutlined
 } from '@ant-design/icons';
-import { ROUTES } from '../constants/routes';
-import GridList from '../components/ui/GridList';
+import { ROUTES } from '@constants/routes';
+import GridList from '@components/ui/GridList';
 
 const { Title, Paragraph } = Typography;
 

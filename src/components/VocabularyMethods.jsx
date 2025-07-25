@@ -8,7 +8,7 @@ import {
   UnorderedListOutlined,
   BookOutlined
 } from '@ant-design/icons';
-import styles from './VocabularyMethods.module.css';
+import styles from '@css/VocabularyMethods.module.css';
 
 const { Title, Paragraph } = Typography;
 

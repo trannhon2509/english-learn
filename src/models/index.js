@@ -1,5 +1,5 @@
 // Export tất cả các models
-export { Word } from './Word.js';
-export { Vocabulary } from './Vocabulary.js';
-export { Course, Lesson } from './Course.js';
-export { User } from './User.js';
+export { Word } from '@models/Word.js';
+export { Vocabulary } from '@models/Vocabulary.js';
+export { Course, Lesson } from '@models/Course.js';
+export { User } from '@models/User.js';

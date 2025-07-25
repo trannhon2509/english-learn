@@ -1,9 +1,9 @@
 import React, { Suspense } from 'react';
 import { Layout, Spin } from 'antd';
 import { Outlet } from 'react-router-dom';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import styles from './BasicLayout.module.css';
+import Header from '@components/Header';
+import Footer from '@components/Footer';
+import styles from '@css/BasicLayout.module.css';
 
 const { Content } = Layout;
 

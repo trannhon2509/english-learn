@@ -14,8 +14,8 @@ import {
   MessageOutlined,
   SoundOutlined
 } from '@ant-design/icons';
-import { ROUTES } from '../constants/routes';
-import styles from './HomePage.module.css';
+import { ROUTES } from '@constants/routes';
+import styles from '@css/HomePage.module.css';
 
 const { Title, Paragraph } = Typography;
 

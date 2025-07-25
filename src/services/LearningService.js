@@ -3,7 +3,7 @@ import {
   VocabularyManager, 
   CourseManager, 
   UserManager 
-} from '../managers/index.js';
+} from '@managers/index.js';
 
 /**
  * LearningService - Service tổng hợp quản lý toàn bộ hệ thống học tập

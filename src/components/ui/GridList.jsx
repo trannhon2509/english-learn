@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Select, Button, Modal } from 'antd';
 import { SearchOutlined, FilterOutlined } from '@ant-design/icons';
-import styles from './GridList.module.css';
+import styles from '@css/GridList.module.css';
 
 const { Option } = Select;
 

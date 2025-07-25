@@ -10,7 +10,7 @@ import {
   MenuOutlined,
 } from '@ant-design/icons';
 import { ROUTES } from '../constants/routes';
-import styles from './Sidebar.module.css';
+import styles from '@css/Sidebar.module.css';
 
 const { Sider } = Layout;
 
