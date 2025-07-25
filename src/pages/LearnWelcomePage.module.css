@@ -1,0 +1,204 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.welcomeSection {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.welcomeContent {
+  margin-bottom: 32px;
+}
+
+.welcomeTitle {
+  color: #333 !important;
+  margin-bottom: 16px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.welcomeIcon {
+  color: #667eea;
+  font-size: 32px;
+}
+
+.welcomeDesc {
+  font-size: 16px;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.statsRow {
+  margin: 0 -8px;
+}
+
+.statCard {
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.statNumber {
+  font-size: 24px;
+  font-weight: bold;
+  color: #667eea;
+  margin-bottom: 4px;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+}
+
+.methodsSection {
+  margin-top: 48px;
+}
+
+.sectionTitle {
+  text-align: center;
+  color: #333 !important;
+  margin-bottom: 32px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.methodCard {
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.methodCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.methodCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.methodCard .ant-card-body {
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.methodIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}
+
+.methodTitle {
+  color: #333 !important;
+  margin-bottom: 12px !important;
+  font-size: 18px !important;
+}
+
+.methodDesc {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+
+.progressSection {
+  margin-bottom: 20px;
+}
+
+.progressLabel {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.startButton {
+  border-radius: 8px;
+  height: 40px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.startButton:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 12px;
+  }
+  
+  .welcomeTitle {
+    font-size: 24px !important;
+  }
+  
+  .welcomeIcon {
+    font-size: 24px;
+  }
+  
+  .methodIcon {
+    font-size: 36px;
+    height: 60px;
+  }
+  
+  .methodCard .ant-card-body {
+    padding: 20px;
+  }
+  
+  .statNumber {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .statsRow {
+    margin: 0 -4px;
+  }
+  
+  .welcomeTitle {
+    font-size: 20px !important;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .methodCard .ant-card-body {
+    padding: 16px;
+  }
+}

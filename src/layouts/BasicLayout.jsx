@@ -1,96 +1,30 @@
-import React from 'react';
-import { Layout, Menu, Button, Drawer } from 'antd';
-import { MenuOutlined, HomeOutlined, BookOutlined, UserOutlined } from '@ant-design/icons';
-import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
-import './layout.css';
+import React, { Suspense } from 'react';
+import { Layout, Spin } from 'antd';
+import { Outlet } from 'react-router-dom';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import styles from './BasicLayout.module.css';
 
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
-const BasicLayout = ({ children }) => {
-  const [drawerVisible, setDrawerVisible] = useState(false);
-  const location = useLocation();
-
-  const menuItems = [
-    {
-      key: '/',
-      icon: <HomeOutlined />,
-      label: <Link to="/">Trang chủ</Link>,
-    },
-    {
-      key: '/learn',
-      icon: <BookOutlined />,
-      label: <Link to="/learn">Học tập</Link>,
-    },
-    {
-      key: '/profile',
-      icon: <UserOutlined />,
-      label: <Link to="/profile">Hồ sơ</Link>,
-    },
-  ];
-
-  const showDrawer = () => {
-    setDrawerVisible(true);
-  };
-
-  const closeDrawer = () => {
-    setDrawerVisible(false);
-  };
-
+const BasicLayout = () => {
   return (
-    <Layout className="layout-content-wrapper" style={{ minHeight: '100vh' }}>
-      <Header className="basic-layout-header">
-        <Link to="/" className="brand-logo">
-          English Learn
-        </Link>
+    <Layout className={styles.layoutWrapper}>
+      <Header />
 
-        {/* Desktop Menu */}
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          selectedKeys={[location.pathname]}
-          items={menuItems}
-          style={{
-            flex: 1,
-            minWidth: 0,
-            marginLeft: '24px',
-          }}
-          className="desktop-menu"
-        />
-
-        {/* Mobile Menu Button */}
-        <Button
-          type="text"
-          icon={<MenuOutlined />}
-          onClick={showDrawer}
-          className="mobile-menu-button"
-        />
-
-        {/* Mobile Drawer */}
-        <Drawer
-          title="Menu"
-          placement="right"
-          closable={true}
-          onClose={closeDrawer}
-          open={drawerVisible}
-          className="mobile-nav-drawer"
-        >
-          <Menu
-            mode="vertical"
-            selectedKeys={[location.pathname]}
-            items={menuItems}
-            onClick={closeDrawer}
-          />
-        </Drawer>
-      </Header>
-
-      <Content className="basic-layout-content">
-        {children}
+      <Content className={styles.content}>
+        <div className={styles.contentInner}>
+          <Suspense fallback={
+            <div style={{ textAlign: 'center', padding: '50px 0' }}>
+              <Spin size="large" />
+            </div>
+          }>
+            <Outlet />
+          </Suspense>
+        </div>
       </Content>
 
-      <Footer className="basic-layout-footer">
-        English Learn ©{new Date().getFullYear()} - Học tiếng Anh hiệu quả
-      </Footer>
+      <Footer />
     </Layout>
   );
 };

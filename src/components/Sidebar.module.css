@@ -1,0 +1,114 @@
+/* Sidebar Component CSS */
+
+.sidebar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+  height: calc(100vh - 140px); /* Không sticky, chiều cao trừ header và footer */
+  z-index: 999;
+  border-radius: 24px;
+  margin: 24px 0;
+  margin-left: 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: fixed;
+}
+
+.sidebar :global(.ant-layout-sider-trigger) {
+  background: linear-gradient(135deg, #1890ff, #722ed1);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0 0 24px 24px;
+  transition: all 0.3s ease;
+}
+
+.sidebar :global(.ant-layout-sider-trigger):hover {
+  background: linear-gradient(135deg, #40a9ff, #9254de);
+}
+
+.sidebarMenu {
+  border: none;
+  background: transparent;
+  padding: 16px 8px;
+  height: 100%;
+}
+
+.sidebarMenu :global(.ant-menu-item) {
+  border-radius: 12px;
+  margin: 8px 0;
+  padding: 12px 16px;
+  height: auto;
+  line-height: 1.4;
+  transition: all 0.3s ease;
+}
+
+.sidebarMenu :global(.ant-menu-item:hover) {
+  background: linear-gradient(135deg, rgba(24, 144, 255, 0.15), rgba(114, 46, 209, 0.15));
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.2);
+}
+
+.sidebarMenu :global(.ant-menu-item-selected) {
+  background: linear-gradient(135deg, #1890ff, #722ed1);
+  color: white;
+  transform: translateX(8px);
+  box-shadow: 0 6px 16px rgba(24, 144, 255, 0.3);
+}
+
+.sidebarMenu :global(.ant-menu-item-selected a) {
+  color: white !important;
+}
+
+.sidebarMenu :global(.ant-menu-item-selected .anticon) {
+  color: white;
+}
+
+.sidebarMenu :global(.ant-menu-item .anticon) {
+  font-size: 18px;
+  margin-right: 12px;
+  transition: all 0.3s ease;
+}
+
+.sidebarMenu :global(.ant-menu-item:hover .anticon) {
+  transform: scale(1.1);
+}
+
+/* Collapsed state styles */
+.sidebar:global(.ant-layout-sider-collapsed) .sidebarMenu :global(.ant-menu-item) {
+  padding: 16px;
+  text-align: center;
+}
+
+.sidebar:global(.ant-layout-sider-collapsed) .sidebarMenu :global(.ant-menu-item .anticon) {
+  margin-right: 0;
+  font-size: 20px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .sidebar {
+    margin: 16px 0;
+    margin-left: 16px;
+    border-radius: 0 16px 16px 0;
+    height: calc(100vh - 120px);
+    z-index: 1001;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    margin: 12px 0;
+    margin-left: 12px;
+    border-radius: 0 12px 12px 0;
+    height: calc(100vh - 100px);
+    z-index: 1001;
+  }
+  
+  .sidebarMenu {
+    padding: 12px 4px;
+  }
+  
+  .sidebarMenu :global(.ant-menu-item) {
+    margin: 4px 0;
+    padding: 8px 12px;
+  }
+}

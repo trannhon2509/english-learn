@@ -1,0 +1,271 @@
+/* VocabularyPage CSS Module */
+
+.vocabularyContainer {
+  padding: 20px 0;
+}
+
+.pageHeader {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.pageTitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1890ff;
+  margin-bottom: 12px;
+}
+
+.pageSubtitle {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.filterSection {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+  border: 1px solid rgba(24, 144, 255, 0.1);
+}
+
+.filterGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  align-items: end;
+}
+
+.vocabularyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.vocabularyCard {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid rgba(24, 144, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.vocabularyCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #1890ff, #722ed1);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.vocabularyCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(24, 144, 255, 0.2);
+  border-color: rgba(24, 144, 255, 0.3);
+}
+
+.vocabularyCard:hover::before {
+  transform: scaleX(1);
+}
+
+.wordHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.word {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1890ff;
+  margin-bottom: 4px;
+}
+
+.pronunciation {
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+}
+
+.playButton {
+  background: rgba(24, 144, 255, 0.1);
+  border: 1px solid rgba(24, 144, 255, 0.3);
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1890ff;
+  transition: all 0.3s ease;
+}
+
+.playButton:hover {
+  background: #1890ff;
+  color: white;
+  transform: scale(1.1);
+}
+
+.meaning {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.example {
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+  background: rgba(24, 144, 255, 0.05);
+  padding: 12px;
+  border-radius: 8px;
+  border-left: 3px solid #1890ff;
+  margin-bottom: 16px;
+}
+
+.cardActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.actionButton {
+  flex: 1;
+  min-width: 80px;
+  height: 32px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.learnButton {
+  background: linear-gradient(135deg, #52c41a, #73d13d);
+  border: none;
+  color: white;
+}
+
+.learnButton:hover {
+  box-shadow: 0 2px 8px rgba(82, 196, 26, 0.3);
+  transform: translateY(-1px);
+}
+
+.reviewButton {
+  background: rgba(250, 173, 20, 0.1);
+  border: 1px solid rgba(250, 173, 20, 0.3);
+  color: #faad14;
+}
+
+.reviewButton:hover {
+  background: #faad14;
+  color: white;
+}
+
+.favoriteButton {
+  background: rgba(255, 77, 79, 0.1);
+  border: 1px solid rgba(255, 77, 79, 0.3);
+  color: #ff4d4f;
+}
+
+.favoriteButton:hover {
+  background: #ff4d4f;
+  color: white;
+}
+
+.statsSection {
+  background: linear-gradient(135deg, #1890ff, #722ed1);
+  border-radius: 12px;
+  padding: 32px;
+  margin-top: 40px;
+  color: white;
+  text-align: center;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statNumber {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.statLabel {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.emptyIcon {
+  font-size: 64px;
+  color: #d9d9d9;
+  margin-bottom: 16px;
+}
+
+.emptyText {
+  font-size: 18px;
+  margin-bottom: 24px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .vocabularyContainer {
+    padding: 16px 0;
+  }
+  
+  .vocabularyGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .vocabularyCard {
+    padding: 20px;
+  }
+  
+  .filterGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  .word {
+    font-size: 20px;
+  }
+  
+  .cardActions {
+    gap: 6px;
+  }
+  
+  .actionButton {
+    min-width: 70px;
+  }
+}

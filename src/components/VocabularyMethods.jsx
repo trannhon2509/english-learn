@@ -8,6 +8,7 @@ import {
   UnorderedListOutlined,
   BookOutlined
 } from '@ant-design/icons';
+import styles from './VocabularyMethods.module.css';
 
 const { Title, Paragraph } = Typography;
 
@@ -19,6 +20,7 @@ const VocabularyMethods = ({ vocabulary, onSelectMethod, onBack }) => {
       description: 'Học từ vựng qua thẻ ghi nhớ với hình ảnh và âm thanh',
       icon: <PlayCircleOutlined style={{ fontSize: '48px', color: '#1890ff' }} />,
       color: '#1890ff',
+      gradient: 'linear-gradient(135deg, #1890ff, #096dd9)',
       features: ['Lật thẻ để xem nghĩa', 'Phát âm chuẩn', 'Hình ảnh minh họa', 'Theo dõi tiến độ']
     },
     {
@@ -27,6 +29,7 @@ const VocabularyMethods = ({ vocabulary, onSelectMethod, onBack }) => {
       description: 'Luyện tập bằng cách nhập định nghĩa tiếng Anh của từ vựng',
       icon: <EditOutlined style={{ fontSize: '48px', color: '#52c41a' }} />,
       color: '#52c41a',
+      gradient: 'linear-gradient(135deg, #52c41a, #389e0d)',
       features: ['Nhập nghĩa tiếng Anh', 'Kiểm tra chính xác', 'Gợi ý từ khóa', 'Cải thiện từ vựng']
     },
     {
@@ -35,6 +38,7 @@ const VocabularyMethods = ({ vocabulary, onSelectMethod, onBack }) => {
       description: 'Luyện tập bằng cách nhập nghĩa tiếng Việt của từ vựng',
       icon: <TranslationOutlined style={{ fontSize: '48px', color: '#fa8c16' }} />,
       color: '#fa8c16',
+      gradient: 'linear-gradient(135deg, #fa8c16, #d46b08)',
       features: ['Nhập nghĩa tiếng Việt', 'Dễ dàng cho người mới', 'Kiểm tra tức thì', 'Củng cố kiến thức']
     },
     {
@@ -43,36 +47,32 @@ const VocabularyMethods = ({ vocabulary, onSelectMethod, onBack }) => {
       description: 'Xem và ôn tập toàn bộ danh sách từ vựng trong kho',
       icon: <UnorderedListOutlined style={{ fontSize: '48px', color: '#722ed1' }} />,
       color: '#722ed1',
+      gradient: 'linear-gradient(135deg, #722ed1, #531dab)',
       features: ['Danh sách đầy đủ', 'Tìm kiếm nhanh', 'Phân loại theo chủ đề', 'Đánh dấu yêu thích']
     }
   ];
 
   return (
-    <div>
-      <div style={{ marginBottom: '24px' }}>
+    <div className={styles.container}>
+      <div className={styles.header}>
         <Button 
           icon={<ArrowLeftOutlined />} 
           onClick={onBack}
-          style={{ marginBottom: '16px' }}
+          className={styles.backButton}
         >
           Quay lại danh sách kho từ vựng
         </Button>
         
-        <Title level={2}>
-          <BookOutlined style={{ marginRight: '8px', color: '#1890ff' }} />
+        <Title level={2} className={styles.title}>
+          <BookOutlined className={styles.titleIcon} />
           {vocabulary.title}
         </Title>
-        <Paragraph style={{ fontSize: '16px', color: '#666' }}>
+        <Paragraph className={styles.description}>
           {vocabulary.description}
         </Paragraph>
         
-        <div style={{ 
-          padding: '16px', 
-          backgroundColor: '#f0f8ff', 
-          borderRadius: '8px',
-          marginBottom: '24px'
-        }}>
-          <Space size="large">
+        <div className={styles.statsCard}>
+          <Space size="large" wrap>
             <span><strong>Tổng số từ:</strong> {vocabulary.totalWords}</span>
             <span><strong>Đã học:</strong> {vocabulary.learnedWords}</span>
             <span><strong>Còn lại:</strong> {vocabulary.totalWords - vocabulary.learnedWords}</span>
@@ -81,19 +81,18 @@ const VocabularyMethods = ({ vocabulary, onSelectMethod, onBack }) => {
         </div>
       </div>
 
-      <Title level={3} style={{ marginBottom: '24px' }}>
+      <Title level={3} className={styles.methodsTitle}>
         Chọn phương pháp học
       </Title>
 
-      <Row gutter={[16, 16]}>
+      <Row gutter={[24, 24]}>
         {methods.map(method => (
           <Col xs={24} sm={12} lg={12} xl={12} key={method.key}>
             <Card
               hoverable
+              className={styles.methodCard}
               style={{ 
-                height: '100%',
                 borderColor: method.color,
-                transition: 'all 0.3s'
               }}
               bodyStyle={{ 
                 display: 'flex', 
@@ -103,35 +102,32 @@ const VocabularyMethods = ({ vocabulary, onSelectMethod, onBack }) => {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = method.color;
-                e.currentTarget.style.boxShadow = `0 4px 20px ${method.color}30`;
+                e.currentTarget.style.boxShadow = `0 8px 30px ${method.color}30`;
+                e.currentTarget.style.transform = 'translateY(-4px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = '#d9d9d9';
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+                e.currentTarget.style.borderColor = 'rgba(24, 144, 255, 0.3)';
+                e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              <div style={{ textAlign: 'center', marginBottom: '16px' }}>
+              <div className={styles.iconContainer}>
                 {method.icon}
               </div>
               
-              <Title level={4} style={{ textAlign: 'center', marginBottom: '12px' }}>
+              <Title level={4} className={styles.methodTitle}>
                 {method.title}
               </Title>
               
-              <Paragraph style={{ 
-                textAlign: 'center', 
-                color: '#666',
-                flexGrow: 1,
-                marginBottom: '16px'
-              }}>
+              <Paragraph className={styles.methodDescription}>
                 {method.description}
               </Paragraph>
 
-              <div style={{ marginBottom: '20px' }}>
-                <Title level={5} style={{ marginBottom: '8px' }}>Tính năng:</Title>
-                <ul style={{ margin: 0, paddingLeft: '20px' }}>
+              <div className={styles.featuresContainer}>
+                <Title level={5} className={styles.featuresTitle}>Tính năng:</Title>
+                <ul className={styles.featuresList}>
                   {method.features.map((feature, index) => (
-                    <li key={index} style={{ marginBottom: '4px', color: '#666' }}>
+                    <li key={index} className={styles.featureItem}>
                       {feature}
                     </li>
                   ))}
@@ -142,10 +138,10 @@ const VocabularyMethods = ({ vocabulary, onSelectMethod, onBack }) => {
                 type="primary" 
                 size="large"
                 block
+                className={styles.startButton}
                 style={{ 
-                  backgroundColor: method.color,
-                  borderColor: method.color,
-                  marginTop: 'auto'
+                  background: method.gradient,
+                  borderColor: 'transparent',
                 }}
                 onClick={() => onSelectMethod(method.key)}
               >

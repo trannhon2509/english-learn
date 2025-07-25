@@ -1,2 +1,2 @@
 export { default as BasicLayout } from './BasicLayout';
-export { default as ListLayout } from './ListLayout';
+export { default as LearnLayout } from './LearnLayout';

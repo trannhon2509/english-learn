@@ -1,0 +1,155 @@
+/* Header Component CSS */
+
+.header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0 24px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.brandLogo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1890ff;
+  text-decoration: none;
+  background: linear-gradient(135deg, #1890ff, #722ed1);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-right: 32px;
+  transition: all 0.3s ease;
+}
+
+.brandLogo:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.desktopMenu {
+  flex: 1;
+  border-bottom: none;
+  background: transparent;
+  font-weight: 600;
+}
+
+.desktopMenu :global(.ant-menu-item),
+.desktopMenu :global(.ant-menu-submenu) {
+  border-radius: 8px;
+  margin: 0 8px;
+  transition: all 0.3s ease;
+}
+
+.desktopMenu :global(.ant-menu-item:hover),
+.desktopMenu :global(.ant-menu-submenu:hover) {
+  background: linear-gradient(135deg, rgba(24, 144, 255, 0.1), rgba(114, 46, 209, 0.1));
+  transform: translateY(-2px);
+}
+
+.desktopMenu :global(.ant-menu-item-selected) {
+  background: linear-gradient(135deg, #1890ff, #722ed1);
+  color: white;
+}
+
+.desktopMenu :global(.ant-menu-item-selected a) {
+  color: white !important;
+}
+
+.desktopMenu :global(.ant-menu-item-selected:hover) {
+  background: linear-gradient(135deg, #1890ff, #722ed1) !important;
+  color: white !important;
+}
+
+.desktopMenu :global(.ant-menu-item-selected:hover a) {
+  color: white !important;
+}
+
+.mobileMenuButton {
+  display: none;
+  border: 2px solid #1890ff;
+  color: #1890ff;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.mobileMenuButton:hover {
+  background: #1890ff;
+  color: white;
+  transform: scale(1.05);
+}
+
+.mobileNavDrawer :global(.ant-drawer-header) {
+  background: linear-gradient(135deg, #1890ff, #722ed1);
+  color: white;
+  border-bottom: none;
+}
+
+.mobileNavDrawer :global(.ant-drawer-title) {
+  color: white;
+  font-weight: 600;
+}
+
+.mobileNavDrawer :global(.ant-drawer-close) {
+  color: white;
+}
+
+.mobileNavDrawer :global(.ant-menu) {
+  border: none;
+  background: transparent;
+}
+
+.mobileNavDrawer :global(.ant-menu-item) {
+  border-radius: 8px;
+  margin: 8px 0;
+  transition: all 0.3s ease;
+}
+
+.mobileNavDrawer :global(.ant-menu-item:hover) {
+  background: linear-gradient(135deg, rgba(24, 144, 255, 0.1), rgba(114, 46, 209, 0.1));
+}
+
+.mobileNavDrawer :global(.ant-menu-item-selected) {
+  background: linear-gradient(135deg, #1890ff, #722ed1);
+  color: white;
+}
+
+.mobileNavDrawer :global(.ant-menu-item-selected a) {
+  color: white !important;
+}
+
+.mobileNavDrawer :global(.ant-menu-item-selected:hover) {
+  background: linear-gradient(135deg, #1890ff, #722ed1) !important;
+  color: white !important;
+}
+
+.mobileNavDrawer :global(.ant-menu-item-selected:hover a) {
+  color: white !important;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .desktopMenu {
+    display: none;
+  }
+  
+  .mobileMenuButton {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 16px;
+  }
+  
+  .brandLogo {
+    font-size: 20px;
+    margin-right: 16px;
+  }
+}
