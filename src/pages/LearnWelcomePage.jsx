@@ -126,7 +126,7 @@ const LearnWelcomePage = () => {
     {
       id: 'vocabulary',
       title: 'Học từ vựng',
-      description: 'Mở rộng vốn từ vựng với hơn 10,000 từ',
+      description: 'Mở rộng vốn từ vựng của bạn',
       icon: <BookOutlined />,
       route: ROUTES.VOCABULARY,
       color: '#1890ff',
