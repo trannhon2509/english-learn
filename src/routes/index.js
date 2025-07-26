@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { ROUTES } from '@constants/routes';
+import VocabularyStudyPage from '@pages/VocabularyStudyPage';
 
 // Lazy load components for better performance
 const HomePage = lazy(() => import('@pages/HomePage'));
@@ -18,6 +19,7 @@ export const routeComponents = {
   [ROUTES.LISTENING]: ListeningPage,
   [ROUTES.PRONUNCIATION]: PronunciationPage,
   [ROUTES.PROFILE]: ProfilePage,
+  [ROUTES.STUDY]: VocabularyStudyPage,
 };
 
 export const routesConfig = [
@@ -36,32 +38,36 @@ export const routesConfig = [
     description: 'Bắt đầu hành trình học tiếng Anh',
   },
   {
+    path: ROUTES.HOME,
+    element: <HomePage />,
+  },
+  {
+    path: ROUTES.LEARN,
+    element: <LearnPage />,
+  },
+  {
     path: ROUTES.VOCABULARY,
-    component: VocabularyPage,
-    exact: true,
-    title: 'Từ vựng',
-    description: 'Học và luyện tập từ vựng tiếng Anh',
+    element: <VocabularyPage />,
   },
   {
     path: ROUTES.GRAMMAR,
-    component: GrammarPage,
-    exact: true,
-    title: 'Ngữ pháp',
-    description: 'Học ngữ pháp tiếng Anh',
+    element: <GrammarPage />,
   },
   {
     path: ROUTES.LISTENING,
-    component: ListeningPage,
-    exact: true,
-    title: 'Nghe',
-    description: 'Luyện tập kỹ năng nghe tiếng Anh',
+    element: <ListeningPage />,
   },
   {
     path: ROUTES.PRONUNCIATION,
-    component: PronunciationPage,
-    exact: true,
-    title: 'Phát âm',
-    description: 'Luyện tập phát âm tiếng Anh',
+    element: <PronunciationPage />,
+  },
+  {
+    path: ROUTES.PROFILE,
+    element: <ProfilePage />,
+  },
+  {
+    path: ROUTES.STUDY,
+    element: <VocabularyStudyPage />,
   },
   {
     path: ROUTES.PROFILE,

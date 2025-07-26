@@ -4,10 +4,11 @@ import { ConfigProvider } from 'antd';
 import { useDispatch } from 'react-redux';
 import viVN from 'antd/locale/vi_VN';
 import { loadUserSettings } from './store/userSlice';
-import { BasicLayout, LearnLayout } from './layouts';
+import { BasicLayout, LearnLayout, VocabularyStudyLayout } from './layouts';
 import { ROUTES } from './constants/routes';
 import { THEME_CONFIG } from './constants';
 import HomePage from './pages/HomePage';
+import VocabularyStudyPage from './pages/VocabularyStudyPage';
 import LearnWelcomePage from './pages/LearnWelcomePage';
 import VocabularyPage from './pages/VocabularyPage';
 import GrammarPage from './pages/GrammarPage';
@@ -66,6 +67,9 @@ function App() {
             <Route path="grammar" element={<GrammarPage />} />
             <Route path="listening" element={<ListeningPage />} />
             <Route path="pronunciation" element={<PronunciationPage />} />
+          </Route>
+          <Route path="/study" element={<VocabularyStudyLayout />}>
+            <Route index element={<VocabularyStudyPage />} />
           </Route>
         </Routes>
       </Router>

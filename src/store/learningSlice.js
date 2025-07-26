@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   vocabularies: [],
+  studyVocabularies: [],
   currentVocabulary: null,
   learningSession: {
     active: false,
@@ -45,6 +46,9 @@ const learningSlice = createSlice({
   reducers: {
     setVocabularies: (state, action) => {
       state.vocabularies = action.payload;
+    },
+    setStudyVocabularies: (state, action) => {
+      state.studyVocabularies = action.payload;
     },
     addVocabulary: (state, action) => {
       state.vocabularies.push(action.payload);
@@ -101,6 +105,7 @@ const learningSlice = createSlice({
 
 export const {
   setVocabularies,
+  setStudyVocabularies,
   addVocabulary,
   updateVocabulary,
   setCurrentVocabulary,

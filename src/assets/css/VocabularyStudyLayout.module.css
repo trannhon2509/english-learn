@@ -1,0 +1,283 @@
+/* Layout styles using CSS Modules */
+
+.layoutWrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+}
+
+.layoutWrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0 24px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.brandLogo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1890ff;
+  text-decoration: none;
+  background: linear-gradient(135deg, #1890ff, #722ed1);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-right: 32px;
+  transition: all 0.3s ease;
+}
+
+.brandLogo:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.desktopMenu {
+  flex: 1;
+  border: none;
+  background: transparent;
+}
+
+.desktopMenu :global(.ant-menu-item),
+.desktopMenu :global(.ant-menu-submenu) {
+  border-radius: 8px;
+  margin: 0 4px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.desktopMenu :global(.ant-menu-item:hover),
+.desktopMenu :global(.ant-menu-submenu:hover) {
+  background: rgba(24, 144, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.2);
+}
+
+.desktopMenu :global(.ant-menu-item-selected) {
+  background: linear-gradient(135deg, #1890ff, #40a9ff) !important;
+  color: white !important;
+  box-shadow: 0 4px 16px rgba(24, 144, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.desktopMenu :global(.ant-menu-item-selected::after) {
+  display: none !important;
+}
+
+.desktopMenu :global(.ant-menu-item-selected a) {
+  color: white !important;
+  font-weight: 600;
+}
+
+.desktopMenu :global(.ant-menu-item a),
+.desktopMenu :global(.ant-menu-submenu-title) {
+  color: inherit;
+  font-weight: 500;
+}
+
+.mobileMenuButton {
+  display: none;
+  background: rgba(24, 144, 255, 0.1);
+  border: 1px solid rgba(24, 144, 255, 0.2);
+  border-radius: 8px;
+  color: #1890ff;
+  transition: all 0.3s ease;
+}
+
+.mobileMenuButton:hover {
+  background: rgba(24, 144, 255, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.2);
+}
+
+.mobileNavDrawer :global(.ant-drawer-header) {
+  background: linear-gradient(135deg, #1890ff, #722ed1);
+  color: white;
+  border-bottom: none;
+}
+
+.mobileNavDrawer :global(.ant-drawer-title) {
+  color: white;
+  font-weight: 600;
+}
+
+.mobileNavDrawer :global(.ant-drawer-close) {
+  color: white;
+}
+
+.mobileNavDrawer :global(.ant-menu-item) {
+  margin: 8px 0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.mobileNavDrawer :global(.ant-menu-item:hover) {
+  background: rgba(24, 144, 255, 0.1);
+  transform: translateX(8px);
+}
+
+.mobileNavDrawer :global(.ant-menu-item-selected) {
+  background: linear-gradient(135deg, #1890ff, #40a9ff) !important;
+  color: white !important;
+  transform: translateX(8px);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}
+
+.mobileNavDrawer :global(.ant-menu-item-selected a) {
+  color: white !important;
+  font-weight: 600;
+}
+
+.content {
+  min-height: calc(100vh - 140px);
+  padding: 32px;
+  position: relative;
+  z-index: 1;
+}
+
+.contentInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-height: 500px;
+  transition: all 0.3s ease;
+}
+
+.contentInner:hover {
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.footer {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    padding: 0 16px;
+    height: 60px;
+  }
+  
+  .brandLogo {
+    font-size: 20px;
+    margin-right: 16px;
+  }
+  
+  .desktopMenu {
+    display: none;
+  }
+  
+  .mobileMenuButton {
+    display: inline-flex;
+  }
+  
+  .content {
+    padding: 16px;
+  }
+  
+  .contentInner {
+    padding: 20px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .header {
+    padding: 0 12px;
+  }
+  
+  .brandLogo {
+    font-size: 18px;
+  }
+  
+  .content {
+    padding: 12px;
+  }
+  
+  .contentInner {
+    padding: 16px;
+    border-radius: 8px;
+  }
+}
+
+/* Loading animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contentInner {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Scrollbar styling */
+:global(html) {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(24, 144, 255, 0.3) transparent;
+}
+
+:global(::-webkit-scrollbar) {
+  width: 6px;
+}
+
+:global(::-webkit-scrollbar-track) {
+  background: transparent;
+}
+
+:global(::-webkit-scrollbar-thumb) {
+  background: rgba(24, 144, 255, 0.3);
+  border-radius: 3px;
+}
+
+:global(::-webkit-scrollbar-thumb:hover) {
+  background: rgba(24, 144, 255, 0.5);
+}

@@ -10,6 +10,7 @@ export const ROUTES = {
   LISTENING: '/learn/listening',
   PRONUNCIATION: '/learn/pronunciation',
   PROFILE: '/profile',
+  STUDY: '/study',
 };
 
 export const ROUTE_TITLES = {
@@ -18,6 +19,7 @@ export const ROUTE_TITLES = {
   [ROUTES.VOCABULARY]: 'Từ vựng',
   [ROUTES.GRAMMAR]: 'Ngữ pháp',
   [ROUTES.LISTENING]: 'Nghe',
+  [ROUTES.STUDY]: 'Học từ vựng',
   [ROUTES.PRONUNCIATION]: 'Phát âm',
   [ROUTES.PROFILE]: 'Hồ sơ',
 };
