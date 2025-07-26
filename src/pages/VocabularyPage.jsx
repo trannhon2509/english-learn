@@ -1,9 +1,87 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Grid } from 'antd';
 import { Button, Typography } from 'antd';
-import { SoundOutlined, HeartOutlined, BookOutlined } from '@ant-design/icons';
 import styles from '@css/VocabularyPage.module.css';
 import GridList from '@components/ui/GridList';
+import VocabularyCard from '@components/VocabularyCard';
+
+// Header Section
+const VocabularyHeader = React.memo(() => {
+  const { Title, Paragraph } = Typography;
+  return (
+    <div className={styles.pageHeader}>
+      <Title level={1} className={styles.pageTitle}>
+        Từ vựng tiếng Anh
+      </Title>
+      <Paragraph className={styles.pageSubtitle}>
+        Khám phá và học các từ vựng tiếng Anh theo cấp độ và chủ đề
+      </Paragraph>
+    </div>
+  );
+});
+
+// Statistics Section
+const VocabularyStats = React.memo(({ stats }) => {
+  const { Title } = Typography;
+  return (
+    <div className={styles.statsSection}>
+      <Title level={2} style={{ color: 'white', marginBottom: '16px' }}>
+        Thống kê học tập
+      </Title>
+      <div className={styles.statsGrid}>
+        <div className={styles.statItem}>
+          <span className={styles.statNumber}>{stats.total}</span>
+          <span className={styles.statLabel}>Tổng từ vựng</span>
+        </div>
+        <div className={styles.statItem}>
+          <span className={styles.statNumber}>{stats.learned}</span>
+          <span className={styles.statLabel}>Đã học</span>
+        </div>
+        <div className={styles.statItem}>
+          <span className={styles.statNumber}>{stats.mastered}</span>
+          <span className={styles.statLabel}>Thành thạo</span>
+        </div>
+        <div className={styles.statItem}>
+          <span className={styles.statNumber}>{stats.reviewing}</span>
+          <span className={styles.statLabel}>Đang ôn tập</span>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+// Grid Section
+const VocabularyGridSection = React.memo(({
+  filteredVocabularies,
+  renderVocabularyItem,
+  searchTerm,
+  setSearchTerm,
+  filters,
+  filterValues,
+  handleFilterChange,
+  handleClearFilters,
+  columns
+}) => (
+  <GridList
+    items={filteredVocabularies}
+    renderItem={renderVocabularyItem}
+    searchTerm={searchTerm}
+    onSearch={setSearchTerm}
+    filters={filters}
+    filterValues={filterValues}
+    onFilterChange={handleFilterChange}
+    onFilter={null}
+    columns={columns}
+    emptyText={
+      <>
+        Không tìm thấy từ vựng nào phù hợp với bộ lọc của bạn<br />
+        <Button type="primary" onClick={handleClearFilters} style={{ marginTop: 12 }}>
+          Xóa bộ lọc
+        </Button>
+      </>
+    }
+  />
+));
 
 const { Title, Paragraph } = Typography;
 
@@ -24,7 +102,7 @@ const VocabularyPage = () => {
   });
 
   // Mock vocabulary data
-  const vocabularies = [
+  const vocabularies = useMemo(() => [
     {
       id: 1,
       word: 'Achievement',
@@ -85,7 +163,7 @@ const VocabularyPage = () => {
       category: 'adjective',
       learned: false,
     },
-  ];
+  ], []);
 
   const stats = {
     total: vocabularies.length,
@@ -118,126 +196,47 @@ const VocabularyPage = () => {
     },
   ];
 
-  const filteredVocabularies = vocabularies.filter(vocab => {
+  const filteredVocabularies = useMemo(() => vocabularies.filter(vocab => {
     const matchesSearch = vocab.word.toLowerCase().includes(searchTerm.toLowerCase()) ||
       vocab.meaning.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesLevel = filterValues.level === 'all' || vocab.level === filterValues.level;
     const matchesCategory = filterValues.category === 'all' || vocab.category === filterValues.category;
     return matchesSearch && matchesLevel && matchesCategory;
-  });
+  }), [vocabularies, searchTerm, filterValues]);
 
-  const handlePlayAudio = (pronunciation) => {
+  const handlePlayAudio = useCallback((pronunciation) => {
     // Simulate audio playback
     console.log('Playing audio for:', pronunciation);
-  };
+  }, []);
 
-  const handleFilterChange = (filterKey, value) => {
+  const handleFilterChange = useCallback((filterKey, value) => {
     setFilterValues(prev => ({ ...prev, [filterKey]: value }));
-  };
+  }, []);
 
-  const handleClearFilters = () => {
+  const handleClearFilters = useCallback(() => {
     setSearchTerm('');
     setFilterValues({ level: 'all', category: 'all' });
-  };
+  }, []);
 
-  // Component tách riêng cho renderItem
-  const VocabularyCard = ({ vocab }) => (
-    <div className={styles.vocabularyCard}>
-      <div className={styles.wordHeader}>
-        <div>
-          <div className={styles.word}>{vocab.word}</div>
-          <div className={styles.pronunciation}>{vocab.pronunciation}</div>
-        </div>
-        <Button
-          className={styles.playButton}
-          icon={<SoundOutlined />}
-          onClick={() => handlePlayAudio(vocab.pronunciation)}
-        />
-      </div>
-      <div className={styles.meaning}>{vocab.meaning}</div>
-      <div className={styles.example}>
-        <strong>Ví dụ:</strong> {vocab.example}
-      </div>
-      <div className={styles.cardActions}>
-        <Button
-          className={`${styles.actionButton} ${styles.learnButton}`}
-          icon={<BookOutlined />}
-        >
-          {vocab.learned ? 'Ôn tập' : 'Học'}
-        </Button>
-        <Button
-          className={`${styles.actionButton} ${styles.reviewButton}`}
-          icon={<BookOutlined />}
-        >
-          Luyện tập
-        </Button>
-        <Button
-          className={`${styles.actionButton} ${styles.favoriteButton}`}
-          icon={<HeartOutlined />}
-        >
-          Yêu thích
-        </Button>
-      </div>
-    </div>
-  );
+  const renderVocabularyItem = useCallback(vocab => (
+    <VocabularyCard vocab={vocab} onPlayAudio={handlePlayAudio} />
+  ), [handlePlayAudio]);
 
   return (
     <div className={styles.vocabularyContainer}>
-      {/* Page Header */}
-      <div className={styles.pageHeader}>
-        <Title level={1} className={styles.pageTitle}>
-          Từ vựng tiếng Anh
-        </Title>
-        <Paragraph className={styles.pageSubtitle}>
-          Khám phá và học các từ vựng tiếng Anh theo cấp độ và chủ đề
-        </Paragraph>
-      </div>
-
-      {/* Vocabulary GridList */}
-      <GridList
-        items={filteredVocabularies}
-        renderItem={<VocabularyCard />}
+      <VocabularyHeader />
+      <VocabularyGridSection
+        filteredVocabularies={filteredVocabularies}
+        renderVocabularyItem={renderVocabularyItem}
         searchTerm={searchTerm}
-        onSearch={setSearchTerm}
+        setSearchTerm={setSearchTerm}
         filters={filters}
         filterValues={filterValues}
-        onFilterChange={handleFilterChange}
-        onFilter={null}
+        handleFilterChange={handleFilterChange}
+        handleClearFilters={handleClearFilters}
         columns={columns}
-        emptyText={
-          <>
-            Không tìm thấy từ vựng nào phù hợp với bộ lọc của bạn<br />
-            <Button type="primary" onClick={handleClearFilters} style={{ marginTop: 12 }}>
-              Xóa bộ lọc
-            </Button>
-          </>
-        }
       />
-
-      {/* Statistics Section */}
-      <div className={styles.statsSection}>
-        <Title level={2} style={{ color: 'white', marginBottom: '16px' }}>
-          Thống kê học tập
-        </Title>
-        <div className={styles.statsGrid}>
-          <div className={styles.statItem}>
-            <span className={styles.statNumber}>{stats.total}</span>
-            <span className={styles.statLabel}>Tổng từ vựng</span>
-          </div>
-          <div className={styles.statItem}>
-            <span className={styles.statNumber}>{stats.learned}</span>
-            <span className={styles.statLabel}>Đã học</span>
-          </div>
-          <div className={styles.statItem}>
-            <span className={styles.statNumber}>{stats.mastered}</span>
-            <span className={styles.statLabel}>Thành thạo</span>
-          </div>
-          <div className={styles.statItem}>
-            <span className={styles.statNumber}>{stats.reviewing}</span>
-            <span className={styles.statLabel}>Đang ôn tập</span>
-          </div>
-        </div>
-      </div>
+      <VocabularyStats stats={stats} />
     </div>
   );
 };

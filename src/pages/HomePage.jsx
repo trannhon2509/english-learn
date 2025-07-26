@@ -2,24 +2,61 @@ import React from 'react';
 import { Button, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { 
-  BookOutlined, 
-  PlayCircleOutlined, 
-  TrophyOutlined,
+import {
+  BookOutlined,
+  PlayCircleOutlined,
   RocketOutlined,
   HeartOutlined,
   StarOutlined,
   AudioOutlined,
   ReadOutlined,
   MessageOutlined,
-  SoundOutlined
+  SoundOutlined,
+  TrophyOutlined
 } from '@ant-design/icons';
 import { ROUTES } from '@constants/routes';
 import styles from '@css/HomePage.module.css';
+import FeatureCard from '@components/ui/FeatureCard';
+import StatItem from '@components/ui/StatItem';
 
 const { Title, Paragraph } = Typography;
 
-const HomePage = () => {
+// 1. Hero Section Component
+const HeroSection = React.memo(() => (
+  <section className={styles.heroSection}>
+    <Title level={1} className={styles.heroTitle}>
+      Nâng cao tiếng Anh của bạn
+    </Title>
+    <Paragraph className={styles.heroSubtitle}>
+      Học tiếng Anh hiệu quả với phương pháp khoa học, công nghệ AI và trải nghiệm tương tác hấp dẫn.
+      Từ cơ bản đến nâng cao, chúng tôi đồng hành cùng bạn trên mọi bước đường.
+    </Paragraph>
+    <div className={styles.heroButtons}>
+      <Link to={ROUTES.LEARN}>
+        <Button
+          type="primary"
+          size="large"
+          icon={<RocketOutlined />}
+          className={styles.primaryButton}
+        >
+          Bắt đầu học ngay
+        </Button>
+      </Link>
+      <Link to={ROUTES.VOCABULARY}>
+        <Button
+          size="large"
+          icon={<BookOutlined />}
+          className={styles.secondaryButton}
+        >
+          Khám phá từ vựng
+        </Button>
+      </Link>
+    </div>
+  </section>
+));
+
+// 2. Features Section Component
+const FeaturesSection = React.memo(() => {
   const { isAuthenticated } = useSelector((state) => state.user);
 
   const features = [
@@ -63,113 +100,63 @@ const HomePage = () => {
   ];
 
   return (
-    <div>
-      {/* Hero Section */}
-      <section className={styles.heroSection}>
-        <Title level={1} className={styles.heroTitle}>
-          Nâng cao tiếng Anh của bạn
-        </Title>
-        <Paragraph className={styles.heroSubtitle}>
-          Học tiếng Anh hiệu quả với phương pháp khoa học, công nghệ AI và trải nghiệm tương tác hấp dẫn.
-          Từ cơ bản đến nâng cao, chúng tôi đồng hành cùng bạn trên mọi bước đường.
-        </Paragraph>
-        <div className={styles.heroButtons}>
-          <Link to={ROUTES.LEARN}>
-            <Button 
-              type="primary" 
+    <section className={styles.featuresSection}>
+      <Title level={2} className={styles.sectionTitle}>
+        Tại sao chọn English Learn?
+      </Title>
+      <Paragraph className={styles.sectionSubtitle}>
+        Chúng tôi cung cấp trải nghiệm học tập toàn diện với công nghệ hiện đại
+      </Paragraph>
+      <div className={styles.featuresGrid}>
+        {features.map((feature, index) => (
+          <FeatureCard key={index} {...feature} />
+        ))}
+      </div>
+      <Paragraph style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '18px' }}>
+        Những con số ấn tượng từ cộng đồng English Learn
+      </Paragraph>
+      <div className={styles.statsGrid}>
+        {stats.map((stat, index) => (
+          <StatItem key={index} {...stat} />
+        ))}
+      </div>
+      <Paragraph className={styles.ctaDescription}>
+        Tham gia cùng hàng ngàn học viên đã cải thiện tiếng Anh với English Learn.
+        Bắt đầu miễn phí ngay hôm nay!
+      </Paragraph>
+      <div className={styles.heroButtons}>
+        <Link to={ROUTES.LEARN}>
+          <Button
+            type="primary"
+            size="large"
+            icon={<PlayCircleOutlined />}
+            className={styles.primaryButton}
+          >
+            Học miễn phí
+          </Button>
+        </Link>
+        {!isAuthenticated && (
+          <Link to={ROUTES.PROFILE}>
+            <Button
               size="large"
-              icon={<RocketOutlined />}
-              className={styles.primaryButton}
-            >
-              Bắt đầu học ngay
-            </Button>
-          </Link>
-          <Link to={ROUTES.VOCABULARY}>
-            <Button 
-              size="large"
-              icon={<BookOutlined />}
+              icon={<StarOutlined />}
               className={styles.secondaryButton}
             >
-              Khám phá từ vựng
+              Tạo tài khoản
             </Button>
           </Link>
-        </div>
-      </section>
+        )}
+      </div>
+    </section>
+  );
+});
 
-      {/* Features Section */}
-      <section className={styles.featuresSection}>
-        <Title level={2} className={styles.sectionTitle}>
-          Tại sao chọn English Learn?
-        </Title>
-        <Paragraph className={styles.sectionSubtitle}>
-          Chúng tôi cung cấp trải nghiệm học tập toàn diện với công nghệ hiện đại
-        </Paragraph>
-        <div className={styles.featuresGrid}>
-          {features.map((feature, index) => (
-            <div key={index} className={styles.featureCard}>
-              {feature.icon}
-              <Title level={4} className={styles.featureTitle}>
-                {feature.title}
-              </Title>
-              <Paragraph className={styles.featureDescription}>
-                {feature.description}
-              </Paragraph>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className={styles.statsSection}>
-        <Title level={2} style={{ color: 'white', marginBottom: '16px' }}>
-          Thành tựu của chúng tôi
-        </Title>
-        <Paragraph style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '18px' }}>
-          Những con số ấn tượng từ cộng đồng English Learn
-        </Paragraph>
-        <div className={styles.statsGrid}>
-          {stats.map((stat, index) => (
-            <div key={index} className={styles.statItem}>
-              <span className={styles.statNumber}>{stat.number}</span>
-              <span className={styles.statLabel}>{stat.label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className={styles.ctaSection}>
-        <Title level={2} className={styles.ctaTitle}>
-          Sẵn sàng bắt đầu hành trình?
-        </Title>
-        <Paragraph className={styles.ctaDescription}>
-          Tham gia cùng hàng ngàn học viên đã cải thiện tiếng Anh với English Learn.
-          Bắt đầu miễn phí ngay hôm nay!
-        </Paragraph>
-        <div className={styles.heroButtons}>
-          <Link to={ROUTES.LEARN}>
-            <Button 
-              type="primary" 
-              size="large"
-              icon={<PlayCircleOutlined />}
-              className={styles.primaryButton}
-            >
-              Học miễn phí
-            </Button>
-          </Link>
-          {!isAuthenticated && (
-            <Link to={ROUTES.PROFILE}>
-              <Button 
-                size="large"
-                icon={<StarOutlined />}
-                className={styles.secondaryButton}
-              >
-                Tạo tài khoản
-              </Button>
-            </Link>
-          )}
-        </div>
-      </section>
+// 3. Main Page Component
+const HomePage = () => {
+  return (
+    <div>
+      <HeroSection />
+      <FeaturesSection />
     </div>
   );
 };

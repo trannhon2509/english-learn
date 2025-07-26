@@ -414,4 +414,4 @@ const VocabularyList = ({ vocabulary, onBack }) => {
   );
 };
 
-export default VocabularyList;
+export default React.memo(VocabularyList);

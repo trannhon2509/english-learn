@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Layout, Menu, Button, Drawer } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import { Link, useLocation } from 'react-router-dom';
@@ -8,42 +8,64 @@ import styles from '@css/Header.module.css';
 
 const { Header: AntHeader } = Layout;
 
+
+const mapMenuItems = (items) =>
+  items.map(item => ({
+    ...item,
+    label: item.children ? item.label : <Link to={item.key}>{item.label}</Link>,
+    children: item.children?.map(child => ({
+      ...child,
+      label: <Link to={child.key}>{child.label}</Link>,
+    })),
+  }));
+
+const DesktopMenu = React.memo(({ items, selectedKeys }) => (
+  <Menu
+    mode="horizontal"
+    selectedKeys={selectedKeys}
+    items={items}
+    className={styles.desktopMenu}
+  />
+));
+
+const MobileDrawerMenu = React.memo(({ visible, onClose, items, selectedKeys, onMenuClick }) => (
+  <Drawer
+    title="Menu"
+    placement="right"
+    closable={true}
+    onClose={onClose}
+    open={visible}
+    className={styles.mobileNavDrawer}
+  >
+    <Menu
+      mode="vertical"
+      selectedKeys={selectedKeys}
+      items={items}
+      onClick={onMenuClick}
+    />
+  </Drawer>
+));
+
 const Header = ({ showSidebar = false, title = APP_CONFIG.NAME }) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const location = useLocation();
 
-  const desktopMenuItems = getMenuItems(false);
-  const mobileMenuItems = getMenuItems(true);
+  // Memoize menu items
+  const desktopMenuItems = useMemo(() => mapMenuItems(getMenuItems(false)), []);
+  const mobileMenuItems = useMemo(() => mapMenuItems(getMenuItems(true)), []);
 
-  // Function to determine if a menu item should be selected
-  const getSelectedKeys = () => {
+  // Memoize selected keys
+  const selectedKeys = useMemo(() => {
     const currentPath = location.pathname;
-    
-    // Exact match for home page
-    if (currentPath === '/') {
-      return ['/'];
-    }
-    
-    // For learn routes, highlight the learn menu item
-    if (currentPath.startsWith('/learn')) {
-      return ['/learn'];
-    }
-    
-    // For other routes, try exact match
+    if (currentPath === '/') return ['/'];
+    if (currentPath.startsWith('/learn')) return ['/learn'];
     return [currentPath];
-  };
+  }, [location.pathname]);
 
-  const showDrawer = () => {
-    setDrawerVisible(true);
-  };
-
-  const closeDrawer = () => {
-    setDrawerVisible(false);
-  };
-
-  const handleMenuClick = () => {
-    closeDrawer();
-  };
+  // Memoize handlers
+  const showDrawer = useCallback(() => setDrawerVisible(true), []);
+  const closeDrawer = useCallback(() => setDrawerVisible(false), []);
+  const handleMenuClick = useCallback(() => setDrawerVisible(false), []);
 
   return (
     <AntHeader className={styles.header}>
@@ -53,56 +75,24 @@ const Header = ({ showSidebar = false, title = APP_CONFIG.NAME }) => {
 
       {!showSidebar && (
         <>
-          {/* Desktop Menu */}
-          <Menu
-            mode="horizontal"
-            selectedKeys={getSelectedKeys()}
-            items={desktopMenuItems.map(item => ({
-              ...item,
-              label: item.children ? item.label : <Link to={item.key}>{item.label}</Link>,
-              children: item.children?.map(child => ({
-                ...child,
-                label: <Link to={child.key}>{child.label}</Link>,
-              })),
-            }))}
-            className={styles.desktopMenu}
-          />
-
-          {/* Mobile Menu Button */}
+          <DesktopMenu items={desktopMenuItems} selectedKeys={selectedKeys} />
           <Button
             type="text"
             icon={<MenuOutlined />}
             onClick={showDrawer}
             className={styles.mobileMenuButton}
           />
-
-          {/* Mobile Drawer */}
-          <Drawer
-            title="Menu"
-            placement="right"
-            closable={true}
+          <MobileDrawerMenu
+            visible={drawerVisible}
             onClose={closeDrawer}
-            open={drawerVisible}
-            className={styles.mobileNavDrawer}
-          >
-            <Menu
-              mode="vertical"
-              selectedKeys={getSelectedKeys()}
-              items={mobileMenuItems.map(item => ({
-                ...item,
-                label: item.children ? item.label : <Link to={item.key}>{item.label}</Link>,
-                children: item.children?.map(child => ({
-                  ...child,
-                  label: <Link to={child.key}>{child.label}</Link>,
-                })),
-              }))}
-              onClick={handleMenuClick}
-            />
-          </Drawer>
+            items={mobileMenuItems}
+            selectedKeys={selectedKeys}
+            onMenuClick={handleMenuClick}
+          />
         </>
       )}
     </AntHeader>
   );
 };
 
-export default Header;
+export default React.memo(Header);

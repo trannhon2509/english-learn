@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import { Layout, Spin } from 'antd';
 import { Outlet } from 'react-router-dom';
 import Header from '@components/Header';
@@ -11,7 +11,6 @@ const BasicLayout = () => {
   return (
     <Layout className={styles.layoutWrapper}>
       <Header />
-
       <Content className={styles.content}>
         <div className={styles.contentInner}>
           <Suspense fallback={

@@ -155,4 +155,4 @@ const VocabularyMethods = ({ vocabulary, onSelectMethod, onBack }) => {
   );
 };
 
-export default VocabularyMethods;
+export default React.memo(VocabularyMethods);
