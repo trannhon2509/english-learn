@@ -1,0 +1,48 @@
+.container {
+  width: 320px;
+  margin: 0 auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.meaning {
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  color: #333;
+  text-align: center;
+}
+.input {
+  margin-bottom: 12px;
+  width: 100%;
+  font-size: 1rem;
+}
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  justify-content: center;
+}
+.checkBtn {
+  background: #1677ff;
+  color: #fff;
+  border: none;
+}
+.hintBtn {
+  background: #f5f5f5;
+  color: #333;
+  border: none;
+}
+.result {
+  margin-top: 16px;
+  text-align: center;
+}
+.hint {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #e6f7ff;
+  border-radius: 6px;
+  text-align: center;
+  color: #1677ff;
+  font-size: 1rem;
+}

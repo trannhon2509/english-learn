@@ -1,0 +1,33 @@
+.container {
+  width: 320px;
+  margin: 0 auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.word {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.input {
+  margin-bottom: 12px;
+}
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  justify-content: center;
+}
+.result {
+  margin-top: 16px;
+  text-align: center;
+}
+.hint {
+  margin-top: 10px;
+  color: #888;
+  font-style: italic;
+  text-align: center;
+}
